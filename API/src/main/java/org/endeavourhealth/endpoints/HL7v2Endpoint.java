@@ -1,23 +1,16 @@
 package org.endeavourhealth.endpoints;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.endeavourhealth.common.security.annotations.RequiresAdmin;
 import org.endeavourhealth.coreui.endpoints.AbstractEndpoint;
 import org.endeavourhealth.dal.Hl7JDBCDAL;
-import org.endeavourhealth.models.HL7Params;
-import org.endeavourhealth.models.HL7Request;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -57,10 +50,8 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                 viewerDAL.saveHL7Message(wrapper, body.toString());
             }
 
-            String test =  "{ \"Test Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
+            String test =  "{ \"Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
 
-           /* parser = new JSONParser();
-            json = (JSONObject) parser.parse(test);*/
             return Response
                     .ok()
                     .entity(test)
