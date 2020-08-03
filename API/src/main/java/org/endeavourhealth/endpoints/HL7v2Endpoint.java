@@ -35,6 +35,11 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
         return StoreMessageInDatabase(request);
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     private Response StoreMessageInDatabase(String request) {
         try {
 
