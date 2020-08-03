@@ -47,7 +47,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
             String wrapper = mapper.writeValueAsString(jsonobj);
 
             try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
-                viewerDAL.saveHL7Message(wrapper, body.toString());
+                viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
             }
 
             String test =  "{ \"Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
