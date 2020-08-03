@@ -9,7 +9,13 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
 
     private static final Logger LOG = LoggerFactory.getLogger(Hl7JDBCDAL.class);
 
-
+    /**
+     *
+     * @param wrapper
+     * @param message
+     * @param payloadId
+     * @throws Exception
+     */
     public void saveHL7Message(String wrapper, String message, String payloadId) throws Exception {
         String sql = "INSERT INTO hl7v2_inbound.imperial (date_received, message_wrapper, hl7_message, payload_id) " +
                 "VALUES (?, ?, ?, ?)";
