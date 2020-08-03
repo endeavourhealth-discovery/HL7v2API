@@ -36,7 +36,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     }
 
     /**
-     *
+     * Method to save HL7 Message v2 to save to DB
      * @param request
      * @return
      */
