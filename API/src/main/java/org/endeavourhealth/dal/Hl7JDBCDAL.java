@@ -10,7 +10,7 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
     private static final Logger LOG = LoggerFactory.getLogger(Hl7JDBCDAL.class);
 
     /**
-     *
+     * Service Method to save HL7v2 Message to DB for Imperial Trust
      * @param wrapper
      * @param message
      * @param payloadId
