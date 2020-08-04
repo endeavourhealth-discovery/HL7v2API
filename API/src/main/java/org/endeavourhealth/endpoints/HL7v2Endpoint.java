@@ -36,7 +36,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     }
 
     /**
-     * Method to save HL7 Message v2 to save to DB
+     * API to process and pass HL7 Message v2 to DAO layer
      * @param request
      * @return
      */
