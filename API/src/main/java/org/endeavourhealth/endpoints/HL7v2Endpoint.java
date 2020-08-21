@@ -31,7 +31,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
         LOG.info("HL7v2 message received ");
 
-
+         // Test.sendmsg();
         return StoreMessageInDatabase(request);
     }
 
