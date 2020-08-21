@@ -17,7 +17,7 @@ import java.util.*;
 
 
 public class Test {
-    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Test.class);
     private static DbInstance dbInstanceConfiguration = null;
     private static DbConfiguration dbConfiguration = null;
     private static Configuration configuration;
