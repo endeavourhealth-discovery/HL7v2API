@@ -22,19 +22,14 @@ public class Test {
     private static DbConfiguration dbConfiguration = null;
     private static Configuration configuration;
 
-    public static void sendmsg() {
+    public static void sendmsg(String instanceName,String mappid,String kconfigid,String odscode,boolean isbulk) {
         try {
-            String   instanceName ="TEST";
 
-            ConfigManager.initialize("sftpreader", instanceName);
+
+           ConfigManager.initialize(mappid, instanceName);
 
             configuration = Configuration.getInstance();
 
-
-
-            LOG.info("--------------------------------------------------");
-            LOG.info("SFTP Reader " + instanceName);
-            LOG.info("--------------------------------------------------");
 
             LOG.info("Instance " + configuration.getInstanceName() + " on host " + configuration.getMachineName());
             LOG.info("Processing configuration(s): " + configuration.getConfigurationIdsForDisplay());
@@ -42,7 +37,7 @@ public class Test {
             try {
 
                 dbInstanceConfiguration = configuration.getInstanceConfiguration();
-                dbConfiguration = configuration.getConfiguration("EMIS_TEST");
+                dbConfiguration = configuration.getConfiguration(kconfigid);
 
                     DbInstanceEds edsConfiguration = dbInstanceConfiguration.getEdsConfiguration();
 
@@ -71,7 +66,7 @@ public class Test {
                     }
 
 
-                    notify("D82027",true,"TESTMESSAGE");
+                    notify(odscode,isbulk,"TESTMESSAGE");
 
 
                 } catch (Exception e) {
