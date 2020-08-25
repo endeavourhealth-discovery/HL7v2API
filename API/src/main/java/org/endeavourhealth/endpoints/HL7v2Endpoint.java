@@ -69,7 +69,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                 EdsSenderClient.sendmsg( s, true,body.toString(), (jsonobj.get("id")).toString(),dbInstanceConfiguration.getEdsConfiguration());
             }
 
-            String test = "{ \"Response\" : \" "/*+request.getResourceType()*/ + " : Message Filed Successfully! \"}";
+            String test =  "{ \"Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
 
             return Response
                     .ok()
