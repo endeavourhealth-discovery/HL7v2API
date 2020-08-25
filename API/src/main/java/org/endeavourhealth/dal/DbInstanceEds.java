@@ -8,8 +8,18 @@ public class DbInstanceEds {
     private String keycloakUsername;
     private String keycloakPassword;
     private String keycloakClientId;
-    private String tempDirectory;
-    private String sharedStoragePath;
+    private String softwareContentType;
+    private String softwareVersion;
+
+
+    public String getSoftwareContentType() {
+        return softwareContentType;
+    }
+
+    public void setSoftwareContentType(String softwareContentType) {
+        this.softwareContentType = softwareContentType;
+    }
+
 
     public String getEdsUrl() {
         return edsUrl;
@@ -65,6 +75,14 @@ public class DbInstanceEds {
         return this;
     }
 
+    public String getSoftwareVersion() {
+        return softwareVersion;
+    }
+
+    public void setSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+    }
+
     public String getKeycloakClientId() {
         return keycloakClientId;
     }
@@ -74,21 +92,4 @@ public class DbInstanceEds {
         return this;
     }
 
-    public String getTempDirectory() {
-        return tempDirectory;
-    }
-
-    public DbInstanceEds setTempDirectory(String tempDirectory) {
-        this.tempDirectory = tempDirectory;
-        return this;
-    }
-
-    public String getSharedStoragePath() {
-        return sharedStoragePath;
-    }
-
-    public DbInstanceEds setSharedStoragePath(String sharedStoragePath) {
-        this.sharedStoragePath = sharedStoragePath;
-        return this;
-    }
 }
