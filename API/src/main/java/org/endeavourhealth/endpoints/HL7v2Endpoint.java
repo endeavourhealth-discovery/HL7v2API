@@ -7,12 +7,17 @@ import io.swagger.annotations.ApiOperation;
 import org.endeavourhealth.common.security.annotations.RequiresAdmin;
 import org.endeavourhealth.coreui.endpoints.AbstractEndpoint;
 import org.endeavourhealth.dal.Hl7JDBCDAL;
+import org.endeavourhealth.exception.APIException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.ws.rs.*;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,11 +29,11 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
-    @Timed(absolute = true, name="HL7v2API.HL7v2Endpoint.Post")
+    @Timed(absolute = true, name = "HL7v2API.HL7v2Endpoint.Post")
     @Path("/$process-message")
     @ApiOperation(value = "Save the message in the database")
     @RequiresAdmin
-    public Response processMessage(String request ) throws Exception {
+    public Response processMessage(String request) throws Exception {
 
         LOG.info("HL7v2 message received ");
 
@@ -38,6 +43,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
     /**
      * API to process and pass HL7 Message v2 to DAO layer
+     *
      * @param request
      * @return
      */
@@ -53,22 +59,22 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
             String wrapper = mapper.writeValueAsString(jsonobj);
 
             try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
-              //  viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
-                String   instanceName ="TEST";
-                String mappid="sftpreader";
-                String kconfigid="EMIS_TEST";
+                //  viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
+                String instanceName = "TEST";
+                String mappid = "sftpreader";
+                String kconfigid = "EMIS_TEST";
                 JSONObject jsonobj1 = (JSONObject) parser.parse(jsonobj.get("meta").toString());
 
-                Object odscode=jsonobj1.get("tag");
-                JSONArray array =(JSONArray ) odscode;
+                Object odscode = jsonobj1.get("tag");
+                JSONArray array = (JSONArray) odscode;
 
                 JSONObject jsonobj2 = (JSONObject) parser.parse((array.get(0)).toString());
-String s=jsonobj2.get("code").toString();
+                String s = jsonobj2.get("code").toString();
 
-                Test.sendmsg(instanceName,mappid,kconfigid,s,true);
+                Test.sendmsg(instanceName, mappid, kconfigid, s, true);
             }
 
-            String test =  "{ \"Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
+            String test = "{ \"Response\" : \" "/*+request.getResourceType()*/ + " : Message Filed Successfully! \"}";
 
             return Response
                     .ok()
@@ -76,7 +82,7 @@ String s=jsonobj2.get("code").toString();
                     .build();
 
         } catch (Exception e) {
-            throw new RuntimeException("Resource error:" + e);
+            throw new APIException("Resource error:" + e);
         }
     }
 
