@@ -15,7 +15,7 @@ public class EdsSenderClient {
 
     public static void sendmsg(String odscode, boolean isbulk, String message, String payloadId, DbInstanceEds edsConfiguration) throws Exception {
         try {
-
+            LOG.info("I AM IN SENDER");
 
             if (edsConfiguration == null) {
                 throw new Exception("Cannot notify EDS - EDS configuration is not set");
@@ -32,7 +32,7 @@ public class EdsSenderClient {
                             edsConfiguration.getKeycloakClientId());
 
                     Header response = KeycloakClient.instance().getAuthorizationHeader();
-                    System.out.println("Keycloak authorization header is {}: {}" + response.getName() + response.getValue());
+                    LOG.info("Keycloak authorization header is {}: {}" + response.getName() + response.getValue());
 
                 } catch (
                         Exception e) {
@@ -40,13 +40,13 @@ public class EdsSenderClient {
                 }
 
             }
-            System.out.println("creating envolop");
+            LOG.info("creating envolop");
             String envolop = EdsSender.buildEnvelope(UUID.fromString(payloadId), odscode, edsConfiguration.getSoftwareContentType(), edsConfiguration.getSoftwareVersion(), message);
 
-            System.out.println("envelop"+ envolop);
+            LOG.info("envelop"+ envolop);
             EdsSender.notifyEds(edsConfiguration.getEdsUrl(), edsConfiguration.isUseKeycloak(), envolop, isbulk);
 
-            System.out.println("suuccess");
+            LOG.info("suuccess");
 
         } catch (Exception ex) {
            ex.printStackTrace();
