@@ -41,9 +41,9 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.8" level="project" />
     <orderEntry type="library" name="Maven: org.endeavourhealth.common:security:1.80-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
-    <orderEntry type="library" name="Maven: org.endeavourhealth.common:core:1.716-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="core" />
     <orderEntry type="library" name="Maven: org.endeavourhealth.common:fhir:1.148-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.endeavourhealth.common:utility:1.71-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.endeavourhealth.common:utility:1.72-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: net.gpedro.integrations.slack:slack-webhook:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-s3:1.11.247" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-kms:1.11.247" level="project" />
