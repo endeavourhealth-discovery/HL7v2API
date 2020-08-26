@@ -40,11 +40,16 @@ public class EdsSenderClient {
                 }
 
             }
+            System.out.println("creating envolop");
             String envolop = EdsSender.buildEnvelope(UUID.fromString(payloadId), odscode, edsConfiguration.getSoftwareContentType(), edsConfiguration.getSoftwareVersion(), message);
+
+            System.out.println("envelop"+ envolop);
             EdsSender.notifyEds(edsConfiguration.getEdsUrl(), edsConfiguration.isUseKeycloak(), envolop, isbulk);
 
+            System.out.println("suuccess");
 
         } catch (Exception ex) {
+           ex.printStackTrace();
             throw new Exception("Error notifying EDS for batch split ", ex);
         }
     }

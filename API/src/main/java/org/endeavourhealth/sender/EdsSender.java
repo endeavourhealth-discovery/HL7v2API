@@ -61,8 +61,9 @@ public class EdsSender {
                 .setSocketTimeout(HTTP_REQUEST_TIMEOUT_MILLIS)
                 .setConnectionRequestTimeout(HTTP_REQUEST_TIMEOUT_MILLIS)
                 .build();
-
+        System.out.println("in notifyEDS"+edsUrl);
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build()) {
+            System.out.println("in notifyEDS CREATE");
             HttpPost httpPost = new HttpPost(edsUrl);
 
             if (useKeycloak) {
