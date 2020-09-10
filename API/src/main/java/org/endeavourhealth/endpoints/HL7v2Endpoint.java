@@ -26,7 +26,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes({MediaType.APPLICATION_JSON})
     @Timed(absolute = true, name = "HL7v2API.HL7v2Endpoint.Post")
     @Path("/$process-message")
     @ApiOperation(value = "Save the message in the database")
