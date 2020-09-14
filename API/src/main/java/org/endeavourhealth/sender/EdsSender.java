@@ -76,6 +76,7 @@ public class EdsSender {
             }
 
             httpPost.addHeader("Content-Type", "text/xml");
+            httpPost.addHeader("DataDate", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             httpPost.setEntity(new ByteArrayEntity(outboundMessage.getBytes()));
 
             HttpResponse response = httpClient.execute(httpPost);
