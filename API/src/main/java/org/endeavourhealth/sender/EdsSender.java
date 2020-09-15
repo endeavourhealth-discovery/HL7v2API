@@ -12,7 +12,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.endeavourhealth.common.security.keycloak.client.KeycloakClient;
-
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +32,7 @@ public class EdsSender {
     public static String buildEnvelope(UUID messageId, String organisationId, String sourceSoftware, String sourceSoftwareVersion, String payload) throws IOException {
 
         String edsEnvelope = Resources.toString(Resources.getResource(EDS_ENVELOPE_TEMPLATE_FILENAME), Charsets.UTF_8);
-
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, String> test = new HashMap<String, String>() {
             {
                 put("{{message-id}}", messageId.toString());
