@@ -36,7 +36,8 @@ public class EdsSender {
         Map<String, String> test = new HashMap<String, String>() {
             {
                 put("{{message-id}}", messageId.toString());
-                put("{{timestamp}}", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+               // put("{{timestamp}}", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                put("{{timestamp}}", sdf.format(new java.util.Date()));
                 put("{{source-name}}", organisationId);
                 put("{{source-software}}", sourceSoftware);
                 put("{{source-version}}", sourceSoftwareVersion);
