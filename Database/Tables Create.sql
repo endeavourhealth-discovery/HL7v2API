@@ -13,7 +13,9 @@ CREATE TABLE `imperial` (
   `processed` boolean not null default FALSE COMMENT 'whether the message has been sent to the messaging API',
   PRIMARY KEY (`id`),
   UNIQUE KEY `payload_id_UNIQUE` (`payload_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+)
+ROW_FORMAT=COMPRESSED
+KEY_BLOCK_SIZE=8;
 
 CREATE INDEX ix_imperial_date_received_processed
   ON imperial
