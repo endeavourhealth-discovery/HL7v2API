@@ -1,9 +1,10 @@
 package org.endeavourhealth.dal;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import org.endeavourhealth.common.config.ConfigManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -29,53 +30,81 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
             stmt.setString(2, wrapper);
             stmt.setString(3, message);
             stmt.setString(4, payloadId);
+
             stmt.executeUpdate();
         }
     }
 
 
     public DbInstance getInstanceConfiguration() throws Exception {
+     DbInstance ret = new DbInstance();
+        ConfigManager.Initialize("message_sender");
+        JsonNode json = ConfigManager.getConfigurationAsJson("rabbit");
+            if (null==json) {
+                    throw new Exception("please add configurations in config table with app_id ='message_sender' ,config_id='rabbit'");
+                }
 
-        PreparedStatement psSelectEdsConfiguration = null;
-        try {
-            DbInstance ret = new DbInstance();
-            //select the eds record
-            String  sql = "SELECT eds_url, use_keycloak, keycloak_token_uri, keycloak_realm, keycloak_username, keycloak_password, keycloak_clientid, software_content_type, software_version"
-                    + " FROM configuration_eds;";
+            else{
+                DbInstanceEds eds = new DbInstanceEds();
+                eds.setEdsUrl(json.get("eds_url").asText());
+               if(json.get("use_keycloak").asText().equalsIgnoreCase("1"))
+                eds.setUseKeycloak(true);
+               else
+                   eds.setUseKeycloak(false);
+                eds.setKeycloakTokenUri(json.get("keycloak_token_uri").asText());
+                eds.setKeycloakRealm(json.get("keycloak_realm").asText());
+                eds.setKeycloakUsername(json.get("keycloak_username").asText());
+                eds.setKeycloakPassword(json.get("keycloak_password").asText());
+                eds.setKeycloakClientId(json.get("keycloak_clientid").asText());
+                eds.setSoftwareContentType(json.get("software_content_type").asText());
+                eds.setSoftwareVersion(json.get("software_version").asText());
+                eds.setChunksize(Integer.parseInt(json.get("chunk_size").asText()));
+                eds.setSecounds(Integer.parseInt(json.get("sleep_seconds").asText()));
 
-
-
-            psSelectEdsConfiguration = conn.prepareStatement(sql);
-            ResultSet rs = psSelectEdsConfiguration.executeQuery();
-            if (!rs.next()) {
-                throw new Exception("No configuration_eds record found");
+                ret.setEdsConfiguration(eds);
             }
-            int col = 1;
-
-            DbInstanceEds eds = new DbInstanceEds();
-            eds.setEdsUrl(rs.getString(col++));
-            eds.setUseKeycloak(rs.getBoolean(col++));
-            eds.setKeycloakTokenUri(rs.getString(col++));
-            eds.setKeycloakRealm(rs.getString(col++));
-            eds.setKeycloakUsername(rs.getString(col++));
-            eds.setKeycloakPassword(rs.getString(col++));
-            eds.setKeycloakClientId(rs.getString(col++));
-            eds.setSoftwareContentType(rs.getString(col++));
-            eds.setSoftwareVersion(rs.getString(col++));
-
-            ret.setEdsConfiguration(eds);
-
             return ret;
 
-        } finally {
 
-            if (psSelectEdsConfiguration != null) {
-                psSelectEdsConfiguration.close();
-            }
+    }
 
+    public java.util.List<HL7MessageInstance> getUnsendMessages(int chunksize) throws Exception {
+
+        ArrayList<HL7MessageInstance> mlist=new ArrayList<HL7MessageInstance>();
+        HL7MessageInstance ret=null;
+
+        //select the eds record
+        String  sql = "SELECT id,message_wrapper,hl7_message  FROM hl7v2_inbound.imperial where send_to_mq='N' ORDER BY ID";
+
+        try (PreparedStatement psSelectEdsConfiguration = conn.prepareStatement(sql)) {
+            ResultSet rs = psSelectEdsConfiguration.executeQuery();
+              int rec_count=0;
+                while(rs.next())
+                {
+                    rec_count=rec_count+1;
+                     int col=1;
+                    mlist.add(new HL7MessageInstance().setId(rs.getInt(col++)).setMeta(rs.getString(col++)).setHl7message(rs.getString(col++)));
+                    if(rec_count==chunksize)
+                    {
+                        break;
+                    }
+                }
 
         }
+        return mlist;
+
+
     }
+
+    public void updateSuccess(int id)throws Exception
+    {
+    String sql = "update  hl7v2_inbound.imperial set send_to_mq='Y' where id=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
+    }
+}
 
 
 }

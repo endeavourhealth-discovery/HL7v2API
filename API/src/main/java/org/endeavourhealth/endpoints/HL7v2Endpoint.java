@@ -57,18 +57,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
             try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
                 viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
-               DbInstance dbInstanceConfiguration= viewerDAL.getInstanceConfiguration();
-                JSONObject jsonobj1 = (JSONObject) parser.parse(jsonobj.get("meta").toString());
-
-                Object odscode = jsonobj1.get("tag");
-                JSONArray array = (JSONArray) odscode;
-
-                JSONObject jsonobj2 = (JSONObject) parser.parse((array.get(0)).toString());
-                String s = jsonobj2.get("code").toString();
-
-                EdsSenderClient.sendmsg( s, true,body.toString(), (jsonobj.get("id")).toString(),dbInstanceConfiguration.getEdsConfiguration());
             }
-
             String test =  "{ \"Response\" : \" "/*+request.getResourceType()*/+" : Message Filed Successfully! \"}";
 
             return Response

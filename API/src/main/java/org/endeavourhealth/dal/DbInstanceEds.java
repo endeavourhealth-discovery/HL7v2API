@@ -10,7 +10,26 @@ public class DbInstanceEds {
     private String keycloakClientId;
     private String softwareContentType;
     private String softwareVersion;
+    private int chunksize;
+    private int secounds;
 
+    public int getSecounds() {
+        return secounds;
+    }
+
+    public DbInstanceEds setSecounds(int secounds) {
+        this.secounds = secounds;
+        return this;
+    }
+
+    public int getChunksize() {
+        return chunksize;
+    }
+
+    public DbInstanceEds setChunksize(int chunksize) {
+        this.chunksize = chunksize;
+        return this;
+    }
 
     public String getSoftwareContentType() {
         return softwareContentType;
