@@ -1,10 +1,10 @@
-DROP SCHEMA hl7v2_inbound;
+DROP SCHEMA if exists hl7v2_imperial;
 
-CREATE SCHEMA hl7v2_inbound;
+CREATE SCHEMA hl7v2_imperial;
 
-USE hl7v2_inbound;
+USE hl7v2_imperial;
 
-CREATE TABLE `imperial` (
+CREATE TABLE `hl7v2_inbound_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'unique identifier of the HL7v2 Message',
   `date_received` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'the date the message was received',
   `message_wrapper` text COMMENT 'the information contained in the message wrapper',
@@ -17,6 +17,6 @@ CREATE TABLE `imperial` (
 ROW_FORMAT=COMPRESSED
 KEY_BLOCK_SIZE=8;
 
-CREATE INDEX ix_imperial_date_received_processed
-  ON imperial
+CREATE INDEX ix_hl7v2_inbound_data_date_received_processed
+  ON hl7v2_inbound_data
   (date_received, processed);
