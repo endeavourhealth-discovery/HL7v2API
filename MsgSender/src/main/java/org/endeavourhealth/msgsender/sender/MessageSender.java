@@ -48,7 +48,7 @@ public class MessageSender {
                    }
                    catch(Exception e)
                    {
-                       System.out.println("Waiting for "+dbInstanceConfiguration.getEdsConfiguration().getSecounds() +" Seconds");
+                       System.out.println(" Waiting for "+dbInstanceConfiguration.getEdsConfiguration().getSecounds() +" Seconds");
                        Thread.sleep(dbInstanceConfiguration.getEdsConfiguration().getSecounds() * 1000);
                    }
 
