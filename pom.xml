@@ -23,6 +23,7 @@
 
   <modules>
     <module>API</module>
+    <module>MsgSender</module>
   </modules>
 
   <dependencyManagement>
