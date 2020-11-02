@@ -20,5 +20,5 @@ artifacts:
     - appspec.yml
     - aws_scripts/**/*
     - API/target/API-1.0-SNAPSHOT/**/*
-    - MsgSender/target/**/*
+    - MsgSender/target/**/*.jar
    
