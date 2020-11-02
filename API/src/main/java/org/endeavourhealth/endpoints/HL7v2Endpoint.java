@@ -59,7 +59,8 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                 viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
 
                 String test = "{ \"Response\" : \" "/*+request.getResourceType()*/ + " : Message Filed Successfully! \"}";
-                DbInstance dbInstanceConfiguration = viewerDAL.getInstanceConfiguration();
+
+            /*    DbInstance dbInstanceConfiguration = viewerDAL.getInstanceConfiguration();
                 JSONObject jsonobj1 = (JSONObject) parser.parse(jsonobj.get("meta").toString());
 
                 Object odscode = jsonobj1.get("tag");
@@ -69,7 +70,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                 String s = jsonobj2.get("code").toString();
 
                 EdsSenderClient.sendmsg(s, true, body.toString(), (jsonobj.get("id")).toString(), dbInstanceConfiguration.getEdsConfiguration());
-
+            */
                 return Response
                         .ok()
                         .entity(test)
