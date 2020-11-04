@@ -40,7 +40,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     }
 
     @GET
-    @Path("/healthcheck")
+    @Path("/healthCheck")
     @ApiOperation(value = "health check")
     @RequiresAdmin
     public Response healthCheck(String request) {
