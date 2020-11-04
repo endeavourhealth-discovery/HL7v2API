@@ -18,7 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/hl7")
+@Path("/")
 @Api(description = "API endpoint related to the HL7v2 API")
 public final class HL7v2Endpoint extends AbstractEndpoint {
     private static final Logger LOG = LoggerFactory.getLogger(HL7v2Endpoint.class);
