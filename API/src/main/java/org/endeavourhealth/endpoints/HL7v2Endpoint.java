@@ -39,6 +39,17 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
         return StoreMessageInDatabase(request);
     }
 
+    @GET
+    @Path("/healthcheck")
+    @ApiOperation(value = "health check")
+    @RequiresAdmin
+    public Response healthCheck(String request) {
+
+        LOG.info("HL7v2 message received ");
+        return Response
+                .ok().build();
+    }
+
     /**
      * API to process and pass HL7 Message v2 to DAO layer
      *
