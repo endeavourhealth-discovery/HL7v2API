@@ -33,16 +33,24 @@ public class MessageSender {
                                String mwrap = hl7message.getMeta();
 
                                JSONParser parser = new JSONParser();
-                               JSONObject jsonobj = (JSONObject) parser.parse(mwrap);
+                               JSONObject megWrapperElement = (JSONObject) parser.parse(mwrap);
 
 
-                               JSONObject jsonobj1 = (JSONObject) parser.parse(jsonobj.get("meta").toString());
+                               JSONObject metaElement = (JSONObject) parser.parse(megWrapperElement.get("meta").toString());
 
-                               Object odscode = jsonobj1.get("tag");
-                               JSONArray array = (JSONArray) odscode;
+                               String odsCode=null;
+                               Object tagElement = metaElement.get("tag");
 
-                               JSONObject jsonobj2 = (JSONObject) parser.parse((array.get(0)).toString());
-                               EdsSenderClient.sendmsg(jsonobj2.get("code").toString(), true, hl7message.getHl7message(), (jsonobj.get("id")).toString(), dbInstanceConfiguration.getEdsConfiguration());
+                               if(tagElement instanceof JSONArray ) {
+                                   JSONArray array = (JSONArray) tagElement;
+                                   JSONObject odsElement=(JSONObject) parser.parse((array.get(0)).toString());
+                                   odsCode=odsElement.get("code").toString();
+                               }
+                               else
+                               {
+                                   odsCode=((JSONObject)tagElement).get("code").toString();
+                               }
+                               EdsSenderClient.sendmsg(odsCode, true, hl7message.getHl7message(), (megWrapperElement.get("id")).toString(), dbInstanceConfiguration.getEdsConfiguration());
                                viewerDAL.updateSuccess(hl7message.getId());
 
                            }
