@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MessageSender {
 
@@ -50,7 +51,7 @@ public class MessageSender {
                                {
                                    odsCode=((JSONObject)tagElement).get("code").toString();
                                }
-                               EdsSenderClient.sendmsg(odsCode, true, hl7message.getHl7message(), (megWrapperElement.get("id")).toString(), dbInstanceConfiguration.getEdsConfiguration());
+                               EdsSenderClient.sendmsg(odsCode, true, hl7message.getHl7message(), UUID.randomUUID(), dbInstanceConfiguration.getEdsConfiguration());
                                viewerDAL.updateSuccess(hl7message.getId());
 
                            }
