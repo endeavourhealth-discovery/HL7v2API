@@ -6,19 +6,21 @@ import org.endeavourhealth.msgsender.dal.Hl7JDBCDAL;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class MessageSender {
 
-
+    private static final Logger LOG = LoggerFactory.getLogger(MessageSender.class);
     public static void main(String[] args) {
         try {
            try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
                DbInstance dbInstanceConfiguration = viewerDAL.getInstanceConfiguration();
 
                while(true) {
-
+                   HL7MessageInstance hl7message=new HL7MessageInstance();
                    try {
                        List<HL7MessageInstance> mlist = viewerDAL.getUnsendMessages(dbInstanceConfiguration.getEdsConfiguration().getChunksize());
 
@@ -26,7 +28,7 @@ public class MessageSender {
                            Thread.sleep(dbInstanceConfiguration.getEdsConfiguration().getSecounds() * 1000);
                        } else {
                            for (int i = 0; i < mlist.size(); i++) {
-                               HL7MessageInstance hl7message = mlist.get(i);
+                                hl7message = mlist.get(i);
 
                                String mwrap = hl7message.getMeta();
 
@@ -48,7 +50,9 @@ public class MessageSender {
                    }
                    catch(Exception e)
                    {
-                       System.out.println(" Waiting for "+dbInstanceConfiguration.getEdsConfiguration().getSecounds() +" Seconds");
+
+                       LOG.error("JSON Parsing/ message send failed for the message id : " +hl7message.getId(),e);
+                       LOG.info(" Waiting for "+dbInstanceConfiguration.getEdsConfiguration().getSecounds() +" Seconds");
                        Thread.sleep(dbInstanceConfiguration.getEdsConfiguration().getSecounds() * 1000);
                    }
 
@@ -56,7 +60,7 @@ public class MessageSender {
                }//while
            }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error fetching HL7 message from hl7v2_inbound.imperial table ",e);
         }
     }
 }

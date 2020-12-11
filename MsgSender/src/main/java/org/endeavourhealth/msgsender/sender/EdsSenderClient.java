@@ -14,14 +14,13 @@ public class EdsSenderClient {
 
     public static void sendmsg(String odscode, boolean isbulk, String message, String payloadId, DbInstanceEds edsConfiguration) throws Exception {
         try {
-            LOG.info("I AM IN SENDER");
 
             if (edsConfiguration == null) {
                 throw new Exception("Cannot notify EDS - EDS configuration is not set");
             }
 
             if (edsConfiguration.isUseKeycloak()) {
-                System.out.println("Initialising keycloak at: {}" + edsConfiguration.getKeycloakTokenUri());
+                LOG.debug("Initialising keycloak at: {}" + edsConfiguration.getKeycloakTokenUri());
 
                 try {
                     KeycloakClient.init(edsConfiguration.getKeycloakTokenUri(),
@@ -39,17 +38,16 @@ public class EdsSenderClient {
                 }
 
             }
-            LOG.info("creating envolop");
-            String envolop = EdsSender.buildEnvelope(UUID.fromString(payloadId), odscode, edsConfiguration.getSoftwareContentType(), edsConfiguration.getSoftwareVersion(), message);
 
-            LOG.info("envelop"+ envolop);
-            EdsSender.notifyEds(edsConfiguration.getEdsUrl(), edsConfiguration.isUseKeycloak(), envolop, isbulk);
+            String envelop = EdsSender.buildEnvelope(UUID.fromString(payloadId), odscode, edsConfiguration.getSoftwareContentType(), edsConfiguration.getSoftwareVersion(), message);
 
-            LOG.info("suuccess");
+            LOG.debug("envelop"+ envelop);
+            EdsSender.notifyEds(edsConfiguration.getEdsUrl(), edsConfiguration.isUseKeycloak(), envelop, isbulk);
+
+            LOG.debug("success");
 
         } catch (Exception ex) {
-           ex.printStackTrace();
-            throw new Exception("Error notifying EDS for batch split ", ex);
+                throw new Exception("Error notifying EDS for batch split ", ex);
         }
     }
 }
