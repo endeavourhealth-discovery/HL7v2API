@@ -35,7 +35,6 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
         LOG.info("HL7v2 message received ");
 
-
         return StoreMessageInDatabase(request);
     }
 
@@ -67,7 +66,10 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
             String wrapper = mapper.writeValueAsString(jsonobj);
 
             try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
-                viewerDAL.saveHL7Message(wrapper, body.toString(), (jsonobj.get("id")).toString());
+                String bodyStr= body.toString().replace("\r\n","#@#@#@");
+                bodyStr= bodyStr.toString().replace("\n","\r\n");
+                bodyStr= bodyStr.toString().replace("#@#@#@","\r\n");
+                viewerDAL.saveHL7Message(wrapper, bodyStr, (jsonobj.get("id")).toString());
 
                 String test = "{ \"Response\" : \" "/*+request.getResourceType()*/ + " : Message Filed Successfully! \"}";
 
