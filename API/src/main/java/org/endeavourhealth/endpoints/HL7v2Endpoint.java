@@ -67,8 +67,8 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
 
             try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
                 String bodyStr= body.toString().replace("\r\n","#@#@#@");
-                bodyStr= bodyStr.toString().replace("\n","\r\n");
-                bodyStr= bodyStr.toString().replace("#@#@#@","\r\n");
+                bodyStr= bodyStr.replace("\n","\r\n");
+                bodyStr= bodyStr.replace("#@#@#@","\r\n");
                 viewerDAL.saveHL7Message(wrapper, bodyStr, (jsonobj.get("id")).toString());
 
                 String test = "{ \"Response\" : \" "/*+request.getResourceType()*/ + " : Message Filed Successfully! \"}";
