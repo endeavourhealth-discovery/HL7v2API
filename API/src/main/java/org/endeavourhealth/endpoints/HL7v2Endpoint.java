@@ -90,7 +90,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                         .build();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Resource error:" + e);
+            throw new RuntimeException("Exception while persisting HL7 message", e);
         }
     }
 
