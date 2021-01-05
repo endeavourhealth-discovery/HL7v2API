@@ -20,7 +20,8 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
      * @throws Exception
      */
     public void saveHL7Message(String wrapper, String message, String payloadId) throws Exception {
-        String sql = "INSERT INTO hl7v2_inbound.imperial (date_received, message_wrapper, hl7_message, payload_id) " +
+
+          String sql = "INSERT INTO imperial (date_received, message_wrapper, hl7_message, payload_id) " +
                 "VALUES (?, ?, ?, ?)";
 
         java.sql.Timestamp now = new java.sql.Timestamp(System.currentTimeMillis());
@@ -74,7 +75,7 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
         HL7MessageInstance ret=null;
 
         //select the eds record
-        String  sql = "SELECT id,message_wrapper,hl7_message  FROM hl7v2_inbound.imperial where send_to_mq='N' ORDER BY ID";
+        String  sql = "SELECT id,message_wrapper,hl7_message  FROM imperial where send_to_mq='N' ORDER BY ID";
 
         try (PreparedStatement psSelectEdsConfiguration = conn.prepareStatement(sql)) {
             ResultSet rs = psSelectEdsConfiguration.executeQuery();
@@ -98,7 +99,7 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
 
     public void updateSuccess(int id)throws Exception
     {
-    String sql = "update  hl7v2_inbound.imperial set send_to_mq='Y' where id=?";
+    String sql = "update  imperial set send_to_mq='Y' where id=?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
         stmt.setInt(1, id);
