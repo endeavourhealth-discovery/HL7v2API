@@ -44,7 +44,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     @RequiresAdmin
     public Response healthCheck(String request) {
 
-        LOG.debug("HL7v2 health check  successfull ");
+        LOG.debug("HL7v2 health check  successful ");
         return Response
                 .ok().build();
     }
