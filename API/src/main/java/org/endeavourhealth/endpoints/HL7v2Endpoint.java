@@ -33,7 +33,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     @RequiresAdmin
     public Response processMessage(String request) throws Exception {
 
-        LOG.info("HL7v2 message received ");
+        LOG.info("HL7v2 message received! ");
 
         return StoreMessageInDatabase(request);
     }
