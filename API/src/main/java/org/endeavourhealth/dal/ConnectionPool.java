@@ -52,9 +52,9 @@ public class ConnectionPool extends GenericCache<Connection> {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            //ConfigManager.Initialize("record-viewer");
-            ConfigManager.Initialize("db_hl7v2_inbound");
-            JsonNode json = ConfigManager.getConfigurationAsJson("database");
+           //ConfigManager.Initialize("record-viewer");
+          //  ConfigManager.initialize("db_hl7v2_inbound","database");
+            JsonNode json = ConfigManager.getConfigurationAsJson("database","db_hl7v2_inbound");
             String url = json.get("url").asText();
             String user = json.get("username").asText();
             String pass = json.get("password").asText();

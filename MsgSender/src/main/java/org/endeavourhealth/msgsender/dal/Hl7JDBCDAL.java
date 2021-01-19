@@ -39,8 +39,8 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
 
     public DbInstance getInstanceConfiguration() throws Exception {
      DbInstance ret = new DbInstance();
-        ConfigManager.Initialize("message_sender");
-        JsonNode json = ConfigManager.getConfigurationAsJson("rabbit");
+    //    ConfigManager.Initialize("message_sender");
+        JsonNode json = ConfigManager.getConfigurationAsJson("rabbit","message_sender");
             if (null==json) {
                     throw new Exception("please add configurations in config table with app_id ='message_sender' ,config_id='rabbit'");
                 }

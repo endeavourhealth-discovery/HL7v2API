@@ -35,7 +35,7 @@ public class ConnectionPool extends GenericCache<Connection> {
                 return true;
             }
 
-            decSize();
+           // decSize();
 
             if (!connection.isClosed())
                 connection.close();
@@ -52,8 +52,7 @@ public class ConnectionPool extends GenericCache<Connection> {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            ConfigManager.Initialize("record-viewer");
-            JsonNode json = ConfigManager.getConfigurationAsJson("database");
+            JsonNode json = ConfigManager.getConfigurationAsJson("database","db_hl7v2_inbound");
             String url = json.get("url").asText();
             String user = json.get("username").asText();
             String pass = json.get("password").asText();
@@ -69,7 +68,7 @@ public class ConnectionPool extends GenericCache<Connection> {
 
             Connection connection = DriverManager.getConnection(url, props);    // NOSONAR
 
-            incSize();
+            //incSize();
             return connection;
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -80,13 +79,13 @@ public class ConnectionPool extends GenericCache<Connection> {
     @Override
     public Connection pop() {
         Connection conn = super.pop();
-        incUse();
+       // incUse();
         return conn;
     }
 
     @Override
     public void push(Connection conn) {
-        decUse();
+      //  decUse();
         super.push(conn);
     }
 
