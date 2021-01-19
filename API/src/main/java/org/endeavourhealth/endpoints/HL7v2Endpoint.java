@@ -44,7 +44,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
     @RequiresAdmin
     public Response healthCheck(String request) {
 
-        LOG.debug("HL7v2 health check  successfull ");
+        LOG.debug("HL7v2 health check  successful ");
         return Response
                 .ok().build();
     }
@@ -90,7 +90,7 @@ public final class HL7v2Endpoint extends AbstractEndpoint {
                         .build();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Resource error:" + e);
+            throw new RuntimeException("Exception while persisting HL7 message", e);
         }
     }
 
