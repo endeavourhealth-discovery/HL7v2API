@@ -35,7 +35,7 @@ public class ConnectionPool extends GenericCache<Connection> {
                 return true;
             }
 
-           // decSize();
+           decSize();
 
             if (!connection.isClosed())
                 connection.close();
@@ -68,7 +68,7 @@ public class ConnectionPool extends GenericCache<Connection> {
 
             Connection connection = DriverManager.getConnection(url, props);    // NOSONAR
 
-            //incSize();
+           incSize();
             return connection;
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -79,13 +79,13 @@ public class ConnectionPool extends GenericCache<Connection> {
     @Override
     public Connection pop() {
         Connection conn = super.pop();
-       // incUse();
+       incUse();
         return conn;
     }
 
     @Override
     public void push(Connection conn) {
-      //  decUse();
+        decUse();
         super.push(conn);
     }
 

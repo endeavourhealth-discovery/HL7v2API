@@ -37,37 +37,6 @@ public class Hl7JDBCDAL extends BaseJDBCDAL {
     }
 
 
-    public DbInstance getInstanceConfiguration() throws Exception {
-     DbInstance ret = new DbInstance();
-        ConfigManager.Initialize("message_sender");
-        JsonNode json = ConfigManager.getConfigurationAsJson("rabbit");
-            if (null==json) {
-                    throw new Exception("please add configurations in config table with app_id ='message_sender' ,config_id='rabbit'");
-                }
-
-            else{
-                DbInstanceEds eds = new DbInstanceEds();
-                eds.setEdsUrl(json.get("eds_url").asText());
-               if(json.get("use_keycloak").asText().equalsIgnoreCase("1"))
-                eds.setUseKeycloak(true);
-               else
-                   eds.setUseKeycloak(false);
-                eds.setKeycloakTokenUri(json.get("keycloak_token_uri").asText());
-                eds.setKeycloakRealm(json.get("keycloak_realm").asText());
-                eds.setKeycloakUsername(json.get("keycloak_username").asText());
-                eds.setKeycloakPassword(json.get("keycloak_password").asText());
-                eds.setKeycloakClientId(json.get("keycloak_clientid").asText());
-                eds.setSoftwareContentType(json.get("software_content_type").asText());
-                eds.setSoftwareVersion(json.get("software_version").asText());
-                eds.setChunksize(Integer.parseInt(json.get("chunk_size").asText()));
-                eds.setSecounds(Integer.parseInt(json.get("sleep_seconds").asText()));
-
-                ret.setEdsConfiguration(eds);
-            }
-            return ret;
-
-
-    }
 
     public java.util.List<HL7MessageInstance> getUnsendMessages(int chunksize) throws Exception {
 

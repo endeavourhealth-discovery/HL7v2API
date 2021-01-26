@@ -1,5 +1,7 @@
 package org.endeavourhealth.msgsender.sender;
 
+import org.endeavourhealth.common.config.ConfigManager;
+import org.endeavourhealth.common.config.ConfigManagerException;
 import org.endeavourhealth.common.utility.SlackHelper;
 import org.endeavourhealth.msgsender.dal.DbInstance;
 import org.endeavourhealth.msgsender.dal.HL7MessageInstance;
@@ -13,14 +15,16 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.UUID;
 
+import static org.endeavourhealth.common.config.ConfigManager.*;
+
 public class MessageSender {
 
     private static final Logger LOG = LoggerFactory.getLogger(MessageSender.class);
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ConfigManagerException {
         int maxtries = 10;
         int trycount = 0;
-
+        Initialize("db_hl7v2_inbound");
         while (true) {
             try {
                 try (Hl7JDBCDAL viewerDAL = new Hl7JDBCDAL()) {
