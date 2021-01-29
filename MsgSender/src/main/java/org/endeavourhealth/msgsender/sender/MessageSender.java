@@ -1,5 +1,6 @@
 package org.endeavourhealth.msgsender.sender;
 
+import com.google.common.base.Strings;
 import org.endeavourhealth.common.config.ConfigManager;
 import org.endeavourhealth.common.config.ConfigManagerException;
 import org.endeavourhealth.common.utility.SlackHelper;
@@ -12,6 +13,9 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,7 +68,10 @@ public class MessageSender {
                                         } else {
                                             odsCode = ((JSONObject) tagElement).get("code").toString();
                                         }
-                                        EdsSenderClient.sendmsg(odsCode, true, hl7message.getHl7message(), UUID.randomUUID(), dbInstanceConfiguration.getEdsConfiguration());
+
+                                        Date messageTimestamp = TimestampHelper.findMessageTimestamp(hl7message);
+
+                                        EdsSenderClient.sendmsg(odsCode, messageTimestamp, hl7message.getHl7message(), UUID.randomUUID(), dbInstanceConfiguration.getEdsConfiguration());
                                         viewerDAL.updateSuccess(hl7message.getId());
 
                                     }
@@ -102,6 +109,7 @@ public class MessageSender {
 
         SlackHelper.sendSlackMessage(SlackHelper.Channel.EnterpriseAgeUpdaterAlerts, "MessageSender is exited please restart process manually");
     }
+
 
 }
 
