@@ -1,5 +1,5 @@
 
-package org.endeavourhealth.models;
+package org.endeavourhealth.hl7v2msgreceiver.models;
 
 import com.fasterxml.jackson.annotation.*;
 

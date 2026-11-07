@@ -1,4 +1,4 @@
-package org.endeavourhealth.models;
+package org.endeavourhealth.hl7v2msgreceiver.models;
 
 public class HL7Request {
     private String httpMethod;

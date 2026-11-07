@@ -1,5 +1,5 @@
 
-package org.endeavourhealth.models;
+package org.endeavourhealth.hl7v2msgreceiver.models;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -9,14 +9,17 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "system",
-    "value"
+    "code",
+    "display"
 })
-public class Identifier {
+public class Coding {
 
     @JsonProperty("system")
     private String system;
-    @JsonProperty("value")
-    private String value;
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("display")
+    private String display;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -30,14 +33,24 @@ public class Identifier {
         this.system = system;
     }
 
-    @JsonProperty("value")
-    public String getValue() {
-        return value;
+    @JsonProperty("code")
+    public String getCode() {
+        return code;
     }
 
-    @JsonProperty("value")
-    public void setValue(String value) {
-        this.value = value;
+    @JsonProperty("code")
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @JsonProperty("display")
+    public String getDisplay() {
+        return display;
+    }
+
+    @JsonProperty("display")
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     @JsonAnyGetter

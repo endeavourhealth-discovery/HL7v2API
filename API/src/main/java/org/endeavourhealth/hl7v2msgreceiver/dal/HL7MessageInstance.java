@@ -1,4 +1,4 @@
-package org.endeavourhealth.dal;
+package org.endeavourhealth.hl7v2msgreceiver.dal;
 
 
 public class HL7MessageInstance {

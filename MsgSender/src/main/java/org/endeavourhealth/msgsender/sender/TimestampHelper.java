@@ -5,9 +5,11 @@ import org.endeavourhealth.msgsender.dal.HL7MessageInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimestampHelper {
     private static final Logger LOG = LoggerFactory.getLogger(TimestampHelper.class);
@@ -47,13 +49,15 @@ public class TimestampHelper {
 
         //if timestamp has extra timezone info, just strip off
         if (timestampTok.length() > 14) {
-            timestampTok = timestampTok.substring(0, 14);
+           timestampTok = timestampTok.substring(0, 14);
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/London"));
             Date d = dateFormat.parse(timestampTok);
-            LOG.trace("Calculated message timestamp " + d + " for message " + message.getId());
+
+            LOG.info("Calculated message timestamp " + d + " for message " + message.getId());
             return d;
 
         } catch (ParseException pe) {

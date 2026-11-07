@@ -1,4 +1,4 @@
-package org.endeavourhealth.exception;
+package org.endeavourhealth.hl7v2msgreceiver.exception;
 
 public class APIException extends RuntimeException {
     private static final long serialVersionUID = 1L;

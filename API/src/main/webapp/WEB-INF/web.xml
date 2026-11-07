@@ -9,7 +9,7 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>io.swagger.jaxrs.listing,org.endeavourhealth.coreui.endpoints,
-                org.endeavourhealth.endpoints,
+                org.endeavourhealth.hl7v2msgreceiver.endpoints,
                 org.endeavourhealth.uiaudit.endpoints
             </param-value>
         </init-param>
@@ -61,7 +61,7 @@
     <!-- startup class, initializes config manager -->
     <context-param>
         <param-name>app_id</param-name>
-        <param-value>data-sharing-manager</param-value>
+        <param-value>hl7v2_api</param-value>
     </context-param>
     <listener>
         <listener-class>
@@ -151,5 +151,26 @@
     <filter-mapping>
         <filter-name>instrumentedFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>httpHeaderSecurity</filter-name>
+        <filter-class>
+            org.apache.catalina.filters.HttpHeaderSecurityFilter
+        </filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>hstsEnabled</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hstsMaxAgeSeconds</param-name>
+            <param-value>31536000</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>httpHeaderSecurity</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 </web-app>

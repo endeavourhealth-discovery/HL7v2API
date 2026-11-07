@@ -16,39 +16,15 @@ public class EdsSenderClient {
     public static void sendmsg(String odscode, Date messageTimestamp, String message, UUID payloadId, DbInstanceEds edsConfiguration) throws Exception {
         try {
 
-            if (edsConfiguration == null) {
-                throw new Exception("Cannot notify EDS - EDS configuration is not set");
-            }
-
-            if (edsConfiguration.isUseKeycloak()) {
-                LOG.debug("Initialising keycloak at: {}" + edsConfiguration.getKeycloakTokenUri());
-
-                try {
-                    KeycloakClient.init(edsConfiguration.getKeycloakTokenUri(),
-                            edsConfiguration.getKeycloakRealm(),
-                            edsConfiguration.getKeycloakUsername(),
-                            edsConfiguration.getKeycloakPassword(),
-                            edsConfiguration.getKeycloakClientId());
-
-                    Header response = KeycloakClient.instance().getAuthorizationHeader();
-                    LOG.info("Keycloak authorization header is {}: {}" + response.getName() + response.getValue());
-
-                } catch (
-                        Exception e) {
-                    throw new Exception("Error initialising keycloak", e);
-                }
-
-            }
-
             String envelop = EdsSender.buildEnvelope(payloadId, odscode, edsConfiguration.getSoftwareContentType(), edsConfiguration.getSoftwareVersion(), message);
 
-            LOG.debug("envelop"+ envelop);
+            //LOG.debug("envelop"+ envelop);
             EdsSender.notifyEds(edsConfiguration.getEdsUrl(), edsConfiguration.isUseKeycloak(), envelop, messageTimestamp);
 
             LOG.debug("success");
 
         } catch (Exception ex) {
-                throw new Exception("Error notifying EDS for batch split ", ex);
+            throw new Exception("Error notifying EDS for batch split ", ex);
         }
     }
 }
